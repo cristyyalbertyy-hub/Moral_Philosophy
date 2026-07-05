@@ -34,15 +34,28 @@ export default function SubchapterPanel({ title, media, accent }) {
           </button>
         ))}
       </div>
-      <div className="media-view" role="tabpanel">
+      <div className="media-view" role="tabpanel" onContextMenu={(event) => event.preventDefault()}>
         {tab === 'video' && (
-          <video className="media-view__video" controls preload="metadata" src={media.video}>
+          <video
+            className="media-view__video"
+            controls
+            controlsList="nodownload"
+            playsInline
+            preload="metadata"
+            src={media.video}
+          >
             Your browser does not support video playback.
           </video>
         )}
         {tab === 'podcast' && (
           <div className="media-view__audio-wrap">
-            <audio className="media-view__audio" controls preload="metadata" src={media.podcast}>
+            <audio
+              className="media-view__audio"
+              controls
+              controlsList="nodownload"
+              preload="metadata"
+              src={media.podcast}
+            >
               Your browser does not support audio playback.
             </audio>
           </div>
