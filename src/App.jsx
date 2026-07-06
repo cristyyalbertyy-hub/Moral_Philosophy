@@ -3,7 +3,7 @@ import { chapters, mediaPaths } from './data/chapters';
 import SubchapterPanel from './components/SubchapterPanel';
 
 const courseTitle = 'Moral Philosophy';
-const overviewImage = '/MP.png';
+const overviewImage = '/MPA.png';
 
 function collapsedRecord(ids) {
   const init = {};
