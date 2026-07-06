@@ -8,14 +8,16 @@ const TABS = [
   { id: 'questionnaire', label: 'Questionnaire', icon: '?' },
 ];
 
-export default function SubchapterPanel({ title, media, accent }) {
+export default function SubchapterPanel({ title, media, accent, hideTitle = false }) {
   const [tab, setTab] = useState('video');
 
   return (
     <div className="subchapter-panel">
-      <h3 className="subchapter-panel__title" style={{ borderColor: accent }}>
-        {title}
-      </h3>
+      {!hideTitle ? (
+        <h3 className="subchapter-panel__title" style={{ borderColor: accent }}>
+          {title}
+        </h3>
+      ) : null}
       <div className="tabs" role="tablist">
         {TABS.map((t) => (
           <button
