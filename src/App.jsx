@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { chapters, mediaPaths } from './data/chapters';
 import SubchapterPanel from './components/SubchapterPanel';
+import { useAuth } from './context/AuthContext';
 
 const courseTitle = 'Moral Philosophy';
 const overviewImage = '/MPA.png';
@@ -12,6 +13,7 @@ function collapsedRecord(ids) {
 }
 
 export default function App() {
+  const { userEmail, logout } = useAuth();
   const [openChapters, setOpenChapters] = useState(() =>
     collapsedRecord(chapters.map((c) => c.id)),
   );
@@ -154,6 +156,18 @@ export default function App() {
           <span className="home-overview-btn__label">Course overview</span>
         </button>
         <h1>{courseTitle}</h1>
+        {userEmail ? (
+          <div className="app-header__actions">
+            <div className="auth-account">
+              <span className="auth-account__email" title={userEmail}>
+                {userEmail}
+              </span>
+              <button type="button" className="btn-ghost" onClick={() => void logout()}>
+                Sair
+              </button>
+            </div>
+          </div>
+        ) : null}
       </header>
 
       {showMobileLessonBar && mobileLessonContext ? (
