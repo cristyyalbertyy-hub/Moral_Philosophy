@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Questionnaire from './Questionnaire';
+import { useMediaProgress } from '../hooks/useMediaProgress';
+import { bindPlaybackProgress } from '../lib/playbackProgress';
 
 const TABS = [
   { id: 'video', label: 'Video', icon: '▶' },
@@ -8,8 +10,23 @@ const TABS = [
   { id: 'questionnaire', label: 'Questionnaire', icon: '?' },
 ];
 
-export default function SubchapterPanel({ title, media, accent, hideTitle = false }) {
+export default function SubchapterPanel({ title, media, accent, hideTitle = false, itemKey }) {
   const [tab, setTab] = useState('video');
+  const { trackWatchComplete } = useMediaProgress(itemKey);
+  const videoRef = useRef(null);
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el || tab !== 'video') return;
+    return bindPlaybackProgress(el, () => void trackWatchComplete('V'));
+  }, [tab, media.video, trackWatchComplete]);
+
+  useEffect(() => {
+    const el = audioRef.current;
+    if (!el || tab !== 'podcast') return;
+    return bindPlaybackProgress(el, () => void trackWatchComplete('P'));
+  }, [tab, media.podcast, trackWatchComplete]);
 
   return (
     <div className="subchapter-panel">
@@ -39,6 +56,7 @@ export default function SubchapterPanel({ title, media, accent, hideTitle = fals
       <div className="media-view" role="tabpanel" onContextMenu={(event) => event.preventDefault()}>
         {tab === 'video' && (
           <video
+            ref={videoRef}
             className="media-view__video"
             controls
             controlsList="nodownload"
@@ -52,6 +70,7 @@ export default function SubchapterPanel({ title, media, accent, hideTitle = fals
         {tab === 'podcast' && (
           <div className="media-view__audio-wrap">
             <audio
+              ref={audioRef}
               className="media-view__audio"
               controls
               controlsList="nodownload"

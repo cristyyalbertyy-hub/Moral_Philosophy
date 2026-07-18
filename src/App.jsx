@@ -256,6 +256,7 @@ export default function App() {
                 media={selected.media}
                 accent={selected.chapter.accent}
                 hideTitle
+                itemKey={`${selected.chapter.id}/${selected.sub.id}`}
               />
             </div>
           ) : (
