@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { chapters, courseTitle, exitDisciplinesUrl, mediaPaths, overviewImage } from './data/chapters';
+import { chapters, courseTitle, mediaPaths, overviewImage } from './data/chapters';
 import SubchapterPanel from './components/SubchapterPanel';
 import { useAuth } from './context/AuthContext';
 
@@ -153,11 +153,8 @@ export default function App() {
           <span className="home-overview-btn__label">Course overview</span>
         </button>
         <h1>{courseTitle}</h1>
-        <div className="app-header__actions">
-          <a href={exitDisciplinesUrl} className="progress-link progress-link--header">
-            ← All disciplines
-          </a>
-          {userEmail ? (
+        {userEmail ? (
+          <div className="app-header__actions">
             <div className="auth-account">
               <span className="auth-account__email" title={userEmail}>
                 {userEmail}
@@ -166,8 +163,8 @@ export default function App() {
                 Sair
               </button>
             </div>
-          ) : null}
-        </div>
+          </div>
+        ) : null}
       </header>
 
       {showMobileLessonBar && mobileLessonContext ? (
