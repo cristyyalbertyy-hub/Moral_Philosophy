@@ -1,3 +1,16 @@
+export const courseTitle = 'Moral Philosophy';
+
+/** Back to Studio9 Medical Science catalogue (embedded vs standalone). */
+export const exitDisciplinesUrl =
+  import.meta.env.VITE_STUDIO9_EXIT_URL ??
+  (import.meta.env.BASE_URL === '/'
+    ? 'https://studio9medical.com/packages/'
+    : '/packages/');
+
+const assetBase = import.meta.env.VITE_MEDIA_ORIGIN || import.meta.env.BASE_URL;
+
+export const overviewImage = `${assetBase}MPA.png`;
+
 export const chapters = [
   {
     id: 'TF',
@@ -44,11 +57,12 @@ export function mediaBase(chapterId, sub) {
 export function mediaPaths(chapterId, sub) {
   const base = mediaBase(chapterId, sub);
   const alt = sub.altFileId ? `${chapterId}_${sub.altFileId}` : null;
+  const mediaOrigin = import.meta.env.VITE_MEDIA_ORIGIN || import.meta.env.BASE_URL;
 
   return {
-    video: alt ? `/${alt}_V.mp4` : `/${base}_V.mp4`,
-    podcast: alt ? `/${alt}_P.m4a` : `/${base}_P.m4a`,
-    infographic: `/${base}_I.png`,
-    questionnaire: `/${base}_Q.csv`,
+    video: alt ? `${mediaOrigin}${alt}_V.mp4` : `${mediaOrigin}${base}_V.mp4`,
+    podcast: alt ? `${mediaOrigin}${alt}_P.m4a` : `${mediaOrigin}${base}_P.m4a`,
+    infographic: `${mediaOrigin}${base}_I.png`,
+    questionnaire: `${mediaOrigin}${base}_Q.csv`,
   };
 }
